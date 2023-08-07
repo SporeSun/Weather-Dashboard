@@ -1,4 +1,3 @@
-// API key for OpenWeatherMap
 const apiKey = '4dd7b57e5eed893af88cf65760ecfbe4'; // Replace this with your actual API key
 
 // Function to fetch weather data from the API
