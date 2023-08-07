@@ -113,3 +113,33 @@ async function handleSubmit(event) {
       displayForecast(weatherData);
     }
 }
+
+  // Function to handle click on search history items
+  function handleHistoryItemClick(event) {
+    const city = $(this).text();
+    $('#cityInput').val(city);
+    $('#cityForm').submit();
+  }
+  
+  // Function to display search history
+  function displaySearchHistory(history) {
+    // Clear the previous search history
+    $('#searchHistory').empty();
+  
+    // Create and append the elements to display the search history
+    const historyDiv = $('<div>').addClass('history');
+    history.forEach((city) => {
+      const historyItem = $('<div>').addClass('history-item').text(city);
+      historyDiv.append(historyItem);
+    });
+  
+    $('#searchHistory').append(historyDiv);
+  }
+
+// Event listeners
+$('#cityForm').on('submit', handleSubmit);
+$('#searchHistory').on('click', '.history-item', handleHistoryItemClick);
+
+// Load search history from local storage and display it
+const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+displaySearchHistory(searchHistory);
