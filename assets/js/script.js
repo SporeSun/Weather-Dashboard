@@ -82,3 +82,34 @@ function displayForecast(forecastData) {
     $('#forecast').append(forecastItem);
   });
 }
+
+// Function to handle form submission
+async function handleSubmit(event) {
+    event.preventDefault();
+    
+    const cityInput = $('#cityInput').val().trim();
+    if (cityInput === '') return;
+    
+    const weatherData = await getWeatherData(cityInput);
+    if (weatherData) {
+      // Store the city in local storage to maintain search history
+      const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+      if (!searchHistory.includes(cityInput)) {
+        searchHistory.push(cityInput);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        displaySearchHistory(searchHistory);
+      }
+  
+      // Display the current weather info and forecast
+      const currentWeather = weatherData.list[0];
+      const cityName = weatherData.city.name;
+      const date = currentWeather.dt_txt.split(' ')[0];
+      const icon = 'https://openweathermap.org/img/w/' + currentWeather.weather[0].icon + '.png';
+      const temperature = currentWeather.main.temp;
+      const humidity = currentWeather.main.humidity;
+      const windSpeed = currentWeather.wind.speed;
+  
+      displayCurrentWeather(cityName, date, icon, temperature, humidity, windSpeed);
+      displayForecast(weatherData);
+    }
+}
