@@ -33,3 +33,52 @@ function displayCurrentWeather(cityName, date, icon, temperature, humidity, wind
     weatherInfoDiv.append(cityHeader, weatherIcon, temperatureP, humidityP, windSpeedP);
     $('#weatherInfo').append(weatherInfoDiv);
   }
+
+function displayForecast(forecastData) {
+    // Clear the previous forecast
+    $('#forecast').empty();
+
+    // Create and append the elements to display the 5-day forecast
+    function displayForecast(forecastData) {
+        // Clear the previous forecast
+        $('#forecast').empty();
+        
+        // Create and append the elements to display the 5-day forecast
+        forecastData.list.slice(1, 6).forEach((forecast) => {
+            const date = forecast.dt_txt.split(' ')[0];
+            const icon = 'https://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png';
+            const temperature = forecast.main.temp;
+            const humidity = forecast.main.humidity;
+            const windSpeed = forecast.wind.speed;
+        
+            const forecastItem = $('<div>').addClass('col-md-3 forecast-item');
+            const dateP = $('<p>').text('Date: ' + date);
+            const weatherIcon = $('<img>').attr('src', icon);
+            const temperatureP = $('<p>').text('Temperature: ' + temperature + ' °F');
+            const humidityP = $('<p>').text('Humidity: ' + humidity + '%');
+            const windSpeedP = $('<p>').text('Wind Speed: ' + windSpeed + ' MPH');
+        
+            forecastItem.append(dateP, weatherIcon, temperatureP, humidityP, windSpeedP);
+            $('#forecast').append(forecastItem);
+        });
+        }
+
+  // Create and append the elements to display the 5-day forecast
+  forecastData.list.slice(1, 6).forEach((forecast) => {
+    const date = forecast.dt_txt.split(' ')[0];
+    const icon = 'https://openweathermap.org/img/w/' + forecast.weather[0].icon + '.png';
+    const temperature = forecast.main.temp;
+    const humidity = forecast.main.humidity;
+    const windSpeed = forecast.wind.speed;
+
+    const forecastItem = $('<div>').addClass('col-md-3 forecast-item');
+    const dateP = $('<p>').text('Date: ' + date);
+    const weatherIcon = $('<img>').attr('src', icon);
+    const temperatureP = $('<p>').text('Temperature: ' + temperature + ' °F');
+    const humidityP = $('<p>').text('Humidity: ' + humidity + '%');
+    const windSpeedP = $('<p>').text('Wind Speed: ' + windSpeed + ' MPH');
+
+    forecastItem.append(dateP, weatherIcon, temperatureP, humidityP, windSpeedP);
+    $('#forecast').append(forecastItem);
+  });
+}
